@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, RetrieveModelMixin
 
-# Create your views here.
+from user.serializers import *
+
+class CreateUserAPIView(
+    GenericAPIView,
+    CreateModelMixin,
+    UpdateModelMixin,
+    RetrieveModelMixin
+):
+    serializer_class = ...
+    queryset = ...
