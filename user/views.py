@@ -1,13 +1,20 @@
-from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, RetrieveModelMixin
+from django.contrib.auth import get_user_model
 
-from user.serializers import *
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 
-class CreateUserAPIView(
-    GenericAPIView,
-    CreateModelMixin,
-    UpdateModelMixin,
-    RetrieveModelMixin
-):
-    serializer_class = ...
-    queryset = ...
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
+from user.serializers import (
+    RegisterUserSerializer,
+    MeSerializer)
+
+class RegisterUserAPIView(CreateAPIView):
+    serializer_class = RegisterUserSerializer
+    permission_classes = (AllowAny, )
+
+class MeAPIView(RetrieveUpdateAPIView):
+    serializer_class = MeSerializer
+    queryset = get_user_model().objects.all()
+
+    def get_object(self, *args, **kwargs):
+        return self.request.user
