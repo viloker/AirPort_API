@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 from user.serializers import (
     RegisterUserSerializer,
