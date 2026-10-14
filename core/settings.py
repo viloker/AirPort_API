@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # my apps
     "user",
+    "airport"
     # third party apps
     "phonenumber_field",
     # DRF app
