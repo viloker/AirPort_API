@@ -86,7 +86,7 @@ class Flight(models.Model):
 
     flight_number = models.CharField(max_length=16)
     route = models.ForeignKey(Route, related_name="flights", on_delete=models.PROTECT)
-    airplan = models.ForeignKey(
+    airplane = models.ForeignKey(
         Airplane, related_name="airplans", on_delete=models.PROTECT
     )
     departure_time = models.DateTimeField()

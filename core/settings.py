@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # my apps
     "user",
     "airport",
+    "orders",
     # third party apps
     "phonenumber_field",
     # DRF app
