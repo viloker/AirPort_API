@@ -16,19 +16,20 @@ class Airport(models.Model):
 
 class Route(models.Model):
     source = models.ForeignKey(
-        Airport, related_name="sources", on_delete=models.PROTECT
+        Airport, related_name="departing_routes", on_delete=models.PROTECT
     )
     destination = models.ForeignKey(
-        Airport, related_name="distinations", on_delete=models.PROTECT
+        Airport, related_name="destinations", on_delete=models.PROTECT
     )
     distance = models.PositiveSmallIntegerField()
 
     def __str__(self):
         return f"{self.source.name} -> {self.destination.name} "
 
-    def clean(self, *args, **kwargs):
+    def save(self, *args, **kwargs):
         if self.source == self.destination:
-            raise ValidationError("Source city can't be the same like destination city")
+            raise ValidationError("SSource airport can’t be the same as destination airport")
+        super().save(*args, **kwargs)
 
 
 class AirplaneType(models.Model):
@@ -49,7 +50,7 @@ class Airline(models.Model):
 class Airplane(models.Model):
     name = models.CharField(max_length=32, unique=True)
 
-    rows = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)])
+    rows = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)], default=1)
     seat_in_row = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)])
 
     airplane_type = models.ForeignKey(
@@ -74,6 +75,14 @@ class Airplane(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        constraints = [
+            models.CheckConstraint(condition=models.Q(rows__gte=1), name="rows_gte"),
+            models.CheckConstraint(
+                condition=models.Q(seat_in_row__gte=1), name="seat_in_row__gte"
+            ),
+        ]
+
 
 class SeatType(models.Model):
     name = models.CharField(max_length=16, unique=True)
@@ -89,19 +98,18 @@ class AirplaneSection(models.Model):
     )
 
     seat_type = models.ForeignKey(
-        SeatType,
-        related_name="sections",
-        on_delete=models.PROTECT,
-        null=True
+        SeatType, related_name="sections", on_delete=models.PROTECT, null=True
     )
     row_from = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)])
     row_to = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)])
 
-    def clean(self, *args, **kwargs):
+    def save(self, *args, **kwargs):
         if not self.row_to <= self.airplane.rows:
-            raise ValidationError("row_to can't be more than all seats in airplane")
+            raise ValueError("row_to can’t be greater than the number of rows in the airplane")
         if not self.row_to > self.row_from:
-            raise ValidationError("row_to can't be less than row_from")
+            raise ValueError("row_to can't be less than row_from")
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Seat type is '{self.seat_type.name}' in '{self.airplane.name}'"
@@ -121,7 +129,7 @@ class Flight(models.Model):
     # flight_number = models.CharField(max_length=16)
     route = models.ForeignKey(Route, related_name="flights", on_delete=models.PROTECT)
     airplane = models.ForeignKey(
-        Airplane, related_name="airplans", on_delete=models.PROTECT
+        Airplane, related_name="flights", on_delete=models.PROTECT
     )
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
@@ -151,7 +159,7 @@ class Crew(models.Model):
     last_name = models.CharField(max_length=32)
     email = models.EmailField(null=True, blank=True, unique=True)
     number_phone = PhoneNumberField(null=True, blank=True, unique=True)
-    birth_data = models.DateField()
+    birth_date = models.DateField()
 
     position = models.ForeignKey(
         CrewPosition,
@@ -161,6 +169,8 @@ class Crew(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=["first_name", "last_name", "birth_data"],
-                                    name="unique_first_last_name_birth_data")
+            models.UniqueConstraint(
+                fields=["first_name", "last_name", "birth_date"],
+                name="unique_first_last_name_birth_date",
+            )
         ]
