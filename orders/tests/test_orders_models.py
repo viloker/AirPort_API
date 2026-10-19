@@ -1,10 +1,12 @@
 from datetime import date, timedelta
 
-
 from django.test import TestCase
 
 from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
+from django.db.models.deletion import ProtectedError
+
+from django.contrib.auth import get_user_model
 
 from orders.models import PromoCode, Passenger, Ticket, Order
 
@@ -95,4 +97,36 @@ class PromoCodeTest(TestCase):
         )
 
         self.assertFalse(promo_code.is_active)
+
+
+class PassengerTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = get_user_model().objects.create_user(
+            email="test@gmail.com",
+            password="test_password"
+        )
+
+    def test_create_pessenger_seccessful(self):
+        passenger = Passenger.objects.create(
+            first_name="test",
+            last_name="test",
+            user=self.user
+        )
+
+        self.assertEqual(self.user, passenger.user)
+        self.assertEqual(1, len(self.user.passengers.all()))
+
+    def test_delete_user_if_passenger_is_exist_seccessful(self):
+        passenger = Passenger.objects.create(
+            first_name="test",
+            last_name="test",
+            user=self.user
+        )
+
+        self.user.delete()
+
+        with self.assertRaises(Passenger.DoesNotExist):
+            passenger.refresh_from_db()
         
