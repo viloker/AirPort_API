@@ -22,6 +22,9 @@ class PromoCode(models.Model):
             return True
         return False
 
+    def __str__(self):
+        return f"code: {self.code}, discount: {self.discount_percent}"
+
 
 class Passenger(models.Model):
     first_name = models.CharField(max_length=32)
@@ -30,6 +33,9 @@ class Passenger(models.Model):
     user = models.ForeignKey(
         get_user_model(), related_name="passengers", on_delete=models.CASCADE
     )
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
 
 
 class Ticket(models.Model):
@@ -72,7 +78,9 @@ class Order(models.Model):
         blank=True,
     )
 
-    status = models.CharField(max_length=12, choices=OrderStatus.choices, default=OrderStatus.PENDING)
+    status = models.CharField(
+        max_length=12, choices=OrderStatus.choices, default=OrderStatus.PENDING
+    )
 
     total_paid = models.DecimalField(
         null=True, blank=True, editable=False, max_digits=10, decimal_places=2
