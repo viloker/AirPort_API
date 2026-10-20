@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.db import models
+
 from django.core.validators import MaxValueValidator
 from django.contrib.auth import get_user_model
 
@@ -21,11 +22,14 @@ class PromoCode(models.Model):
             return True
         return False
 
+
 class Passenger(models.Model):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
 
-    user = models.ForeignKey(get_user_model(), related_name="passengers", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        get_user_model(), related_name="passengers", on_delete=models.CASCADE
+    )
 
 
 class Ticket(models.Model):
@@ -40,13 +44,20 @@ class Ticket(models.Model):
 
     order = models.ForeignKey("Order", related_name="tickets", on_delete=models.PROTECT)
 
-    passenger = models.ForeignKey(Passenger, related_name="tickets", on_delete=models.PROTECT)
+    passenger = models.ForeignKey(
+        Passenger, related_name="tickets", on_delete=models.PROTECT
+    )
 
+
+class OrderStatus(models.TextChoices):
+    PENDING = "pending", "Pending"
+    PAID = "paid", "Paid"
+    CANCELLED = "cancelled", "Cancelled"
 
 
 class Order(models.Model):
     user = models.ForeignKey(
-        get_user_model(), related_name="orders", on_delete=models.CASCADE
+        get_user_model(), related_name="orders", on_delete=models.PROTECT
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -58,13 +69,27 @@ class Order(models.Model):
         blank=True,
     )
 
+    status = models.CharField(max_length=12, choices=OrderStatus.choices, default=OrderStatus.PENDING)
+
+    total_paid = models.DecimalField(
+        null=True, blank=True, editable=False, max_digits=10, decimal_places=2
+    )
+
     @property
     def total_price(self):
+        if self.status == OrderStatus.PAID:
+            return self.total_paid
 
-        price = sum(list(self.tickets.all().values_list("price")))
-        sale = 0
-        if self.promo_code.is_active:
-            sale = price / 100 * self.promo_code.discount_percent
+        discount = 0
 
-        return price - sale
-        
+        total = self.tickets.aggregate(price_sum=models.Sum("price", default=0)).get(
+            "price_sum"
+        )
+
+        if self.promo_code is not None and self.promo_code.is_active:
+            discount = total / 100 * self.promo_code.discount_percent
+
+        return total - discount
+
+    def __str__(self):
+        return f"email: {self.user.email}, total_paid: {self.total_paid}"
