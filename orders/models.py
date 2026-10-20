@@ -42,11 +42,14 @@ class Ticket(models.Model):
 
     price = models.DecimalField(max_digits=7, decimal_places=2)
 
-    order = models.ForeignKey("Order", related_name="tickets", on_delete=models.PROTECT)
+    order = models.ForeignKey("Order", related_name="tickets", on_delete=models.CASCADE)
 
     passenger = models.ForeignKey(
         Passenger, related_name="tickets", on_delete=models.PROTECT
     )
+
+    def __str__(self):
+        return f"{self.flight}. Row: {self.row}, seat: {self.seat}, price: {self.price}"
 
 
 class OrderStatus(models.TextChoices):
