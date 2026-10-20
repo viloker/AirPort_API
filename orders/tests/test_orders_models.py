@@ -286,4 +286,33 @@ class TicketTest(TestCase):
         self.assertIn(ticket_1, self.order.tickets.all())
         self.assertIn(ticket_2, self.order.tickets.all())
 
-#
+
+class OrderTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = get_user_model().objects.create_user(
+            email="test@gmail.com",
+            password="password"
+        )
+
+    def test_delete_user_deletes_order(self):
+        Order.objects.create(
+            user=self.user,
+        )
+        
+        with self.assertRaises(ProtectedError):
+            self.user.delete()
+
+
+    def test_total_price_with_promo_code(self):
+        ...
+
+    def test_total_price_without_promo_code(self):
+        ...
+
+    def test_promo_code_is_done(self):
+        ...
+
+    def test_user_has_many_orders(self):
+        ...
