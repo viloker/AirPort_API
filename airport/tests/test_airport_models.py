@@ -1,6 +1,9 @@
 from datetime import datetime
 
 from django.test import TestCase
+
+from django.utils.timezone import make_aware
+
 from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
 from django.db.models.deletion import ProtectedError
@@ -186,8 +189,8 @@ class FlightTest(TestCase):
     def setUpTestData(cls):
         cls.route = create_routes(1)[0]
         cls.airplane = create_airplanes(1)[0]
-        dep_time = datetime(2024, 12, 12, 23, 16)
-        arrival_time = datetime(2024, 12, 13, 1, 10)
+        dep_time = make_aware(datetime(2024, 12, 12, 23, 16))
+        arrival_time = make_aware(datetime(2024, 12, 13, 1, 10))
 
         cls.flight = Flight.objects.create(
             route=cls.route,

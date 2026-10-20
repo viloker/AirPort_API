@@ -2,6 +2,8 @@ from datetime import date, timedelta, datetime
 
 from django.test import TestCase
 
+from django.utils.timezone import make_aware
+
 from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
 from django.db.models.deletion import ProtectedError
@@ -135,7 +137,7 @@ class TicketTest(TestCase):
     def setUpTestData(cls):
         cls.route = create_routes(1)[0]
         cls.airplane = create_airplanes(1)[0]
-        departure_time = datetime(2025, 5, 12, 12, 15)
+        departure_time = make_aware(datetime(2025, 5, 12, 12, 15))
 
         cls.flight = Flight.objects.create(
             route=cls.route,
@@ -257,7 +259,7 @@ class TicketTest(TestCase):
 
     def test_same_seat_in_other_flight(self):
 
-        departure_time = datetime(2025, 3, 30, 5, 40)
+        departure_time = make_aware(datetime(2025, 3, 30, 5, 40))
         flight_2 = Flight.objects.create(
             route=self.route,
             airplane=self.airplane,
