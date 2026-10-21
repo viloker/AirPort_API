@@ -35,31 +35,43 @@ class PromoCodeTest(TestCase):
             )
 
     def test_valid_from_can_not_be_more_than_valid_to(self):
+
+        promo_code = PromoCode(
+            code="test_code",
+            discount_percent=50,
+            valid_from=date(2024, 1, 1),
+            valid_to=date(2023, 12, 31),
+        )
+
         with self.assertRaises(ValidationError):
-            PromoCode.objects.create(
-                code="test_code",
-                discount_percent=50,
-                valid_from=date(2024, 1, 1),
-                valid_to=date(2023, 12, 31),
-            )
+            
+            promo_code.full_clean()
 
     def test_discount_percent_max_value_100(self):
+
+        promo_code = PromoCode(
+            code="test_code",
+            discount_percent=101,
+            valid_from=date(2024, 1, 1),
+            valid_to=date(2025, 1, 1),
+        )
+
         with self.assertRaises(ValidationError):
-            PromoCode.objects.create(
-                code="test_code",
-                discount_percent=200,
-                valid_from=date(2024, 1, 1),
-                valid_to=date(2025, 1, 1),
-            )
+
+            promo_code.full_clean()
 
     def test_discount_percent_min_value_1(self):
+
+        promo_code = PromoCode(
+            code="test_code",
+            discount_percent=0,
+            valid_from=date(2024, 1, 1),
+            valid_to=date(2025, 1, 1),
+        )
+
         with self.assertRaises(ValidationError):
-            PromoCode.objects.create(
-                code="test_code",
-                discount_percent=0,
-                valid_from=date(2024, 1, 1),
-                valid_to=date(2025, 1, 1),
-            )
+
+            promo_code.full_clean()
 
     def test_is_active_true(self):
 
@@ -208,7 +220,7 @@ class TicketTest(TestCase):
         self.order.delete()
         with self.assertRaises(Ticket.DoesNotExist):
             ticket.refresh_from_db()
-    
+
     def test_delete_passenger_raises_error(self):
         Ticket.objects.create(
             flight=self.flight,
@@ -229,7 +241,7 @@ class TicketTest(TestCase):
             seat=2,
             price=200,
             order=self.order,
-            passenger=self.passenger
+            passenger=self.passenger,
         )
 
         self.assertIn(ticket, self.flight.tickets.all())
@@ -243,7 +255,7 @@ class TicketTest(TestCase):
             seat=1,
             price=200,
             order=self.order,
-            passenger=self.passenger
+            passenger=self.passenger,
         )
 
         ticket_2 = Ticket.objects.create(
@@ -252,7 +264,7 @@ class TicketTest(TestCase):
             seat=2,
             price=200,
             order=self.order,
-            passenger=self.passenger
+            passenger=self.passenger,
         )
 
         self.assertEqual(2, self.order.tickets.all().count())
@@ -264,7 +276,7 @@ class TicketTest(TestCase):
             route=self.route,
             airplane=self.airplane,
             departure_time=departure_time,
-            arrival_time=departure_time + timedelta(hours=2)
+            arrival_time=departure_time + timedelta(hours=2),
         )
 
         ticket_1 = Ticket.objects.create(
@@ -273,7 +285,7 @@ class TicketTest(TestCase):
             seat=1,
             price=200,
             order=self.order,
-            passenger=self.passenger
+            passenger=self.passenger,
         )
 
         ticket_2 = Ticket.objects.create(
@@ -282,7 +294,7 @@ class TicketTest(TestCase):
             seat=1,
             price=200,
             order=self.order,
-            passenger=self.passenger
+            passenger=self.passenger,
         )
 
         self.assertIn(ticket_1, self.order.tickets.all())
@@ -294,27 +306,21 @@ class OrderTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = get_user_model().objects.create_user(
-            email="test@gmail.com",
-            password="password"
+            email="test@gmail.com", password="password"
         )
 
     def test_delete_user_deletes_order(self):
         Order.objects.create(
             user=self.user,
         )
-        
+
         with self.assertRaises(ProtectedError):
             self.user.delete()
 
+    def test_total_price_with_promo_code(self): ...
 
-    def test_total_price_with_promo_code(self):
-        ...
+    def test_total_price_without_promo_code(self): ...
 
-    def test_total_price_without_promo_code(self):
-        ...
+    def test_promo_code_is_done(self): ...
 
-    def test_promo_code_is_done(self):
-        ...
-
-    def test_user_has_many_orders(self):
-        ...
+    def test_user_has_many_orders(self): ...
