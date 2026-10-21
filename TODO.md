@@ -9,8 +9,11 @@
 - [ ] remove default=1 from Airplane.rows
 - [ ] use timezone-aware datetime in tests
 - [ ] test: two airports without code (null + unique)
+- [ ] write serailziers for all models
+- [ ] write views for all models
+
 
 # orders
-- [ ] wright test for models
+- [x] wright test for models
 - [ ] wright serializers for models 
 - [ ] wright views and urls
