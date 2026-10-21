@@ -2,7 +2,8 @@ from datetime import date
 
 from django.db import models
 
-from django.core.validators import MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
 from airport.models import Flight
@@ -11,7 +12,7 @@ from airport.models import Flight
 class PromoCode(models.Model):
     code = models.CharField(max_length=16, unique=True)
     discount_percent = models.PositiveSmallIntegerField(
-        validators=[MaxValueValidator(100)]
+        validators=[MinValueValidator(1), MaxValueValidator(100)]
     )
     valid_from = models.DateField(default=date.today, blank=True)
     valid_to = models.DateField()
@@ -39,7 +40,7 @@ class Passenger(models.Model):
 
 
 class Ticket(models.Model):
-    flight = models.ForeignKey(Flight, related_name="tickets", on_delete=models.CASCADE)
+    flight = models.ForeignKey(Flight, related_name="tickets", on_delete=models.PROTECT)
 
     row = models.PositiveSmallIntegerField()
     seat = models.PositiveSmallIntegerField()
@@ -56,6 +57,13 @@ class Ticket(models.Model):
 
     def __str__(self):
         return f"{self.flight}. Row: {self.row}, seat: {self.seat}, price: {self.price}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["flight", "row", "seat"], name="unique_seat_in_flight"
+            )
+        ]
 
 
 class OrderStatus(models.TextChoices):
