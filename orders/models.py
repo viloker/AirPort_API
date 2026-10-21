@@ -26,6 +26,11 @@ class PromoCode(models.Model):
     def __str__(self):
         return f"code: {self.code}, discount: {self.discount_percent}"
 
+    def clean(self, *args, **kwargs):
+        if self.valid_from > self.valid_to:
+            raise ValidationError("valid_from cannot be later than valid_to")
+        
+        super().clean(*args, **kwargs)
 
 class Passenger(models.Model):
     first_name = models.CharField(max_length=32)
