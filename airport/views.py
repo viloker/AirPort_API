@@ -70,3 +70,8 @@ class FlightViewSet(ModelViewSet):
 class CrewPositionViewSet(ModelViewSet):
     queryset = CrewPosition.objects.all()
     serializer_class = CrewPositionSerializer
+
+
+class CrewViewSet(ModelViewSet):
+    queryset = Crew.objects.all()
+    serializer_class = CrewSerializer
