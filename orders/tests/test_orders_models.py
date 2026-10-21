@@ -11,6 +11,7 @@ from django.db.models.deletion import ProtectedError
 from django.contrib.auth import get_user_model
 
 from orders.models import PromoCode, Passenger, Ticket, Order
+from orders.tests.utils import create_ticket
 
 from airport.models import Flight
 from airport.tests.utils import create_routes, create_airplanes
@@ -44,7 +45,7 @@ class PromoCodeTest(TestCase):
         )
 
         with self.assertRaises(ValidationError):
-            
+
             promo_code.full_clean()
 
     def test_discount_percent_max_value_100(self):
@@ -309,7 +310,7 @@ class OrderTest(TestCase):
             email="test@gmail.com", password="password"
         )
 
-    def test_delete_user_deletes_order(self):
+    def test_delete_user_raise_error(self):
         Order.objects.create(
             user=self.user,
         )
@@ -317,10 +318,41 @@ class OrderTest(TestCase):
         with self.assertRaises(ProtectedError):
             self.user.delete()
 
-    def test_total_price_with_promo_code(self): ...
+    def test_total_price_with_promo_code(self):
 
-    def test_total_price_without_promo_code(self): ...
+        price = 200
+        discount = 50
 
-    def test_promo_code_is_done(self): ...
+        promo_code = PromoCode.objects.create(
+            code="test_code", discount_percent=discount, valid_to=date.today()
+        )
 
-    def test_user_has_many_orders(self): ...
+        order = Order.objects.create(user=self.user, promo_code=promo_code)
+        create_ticket(order, price)
+
+        self.assertEqual(100, order.total_price)
+
+    def test_total_price_without_promo_code(self):
+
+        price = 200
+
+        order = Order.objects.create(user=self.user)
+        create_ticket(order, price)
+
+        self.assertEqual(200, order.total_price)
+
+    def test_promo_code_is_done(self):
+        price = 200
+        discount = 50
+
+        promo_code = PromoCode.objects.create(
+            code="test_code",
+            discount_percent=discount,
+            valid_from=date.today() - timedelta(days=2),
+            valid_to=date.today() - timedelta(days=1),
+        )
+
+        order = Order.objects.create(user=self.user, promo_code=promo_code)
+        create_ticket(order, price)
+
+        self.assertEqual(price, order.total_price)
