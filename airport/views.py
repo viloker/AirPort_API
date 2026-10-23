@@ -75,3 +75,4 @@ class CrewPositionViewSet(ModelViewSet):
 class CrewViewSet(ModelViewSet):
     queryset = Crew.objects.all()
     serializer_class = CrewSerializer
+    permission_classes = (IsAdminUser)
