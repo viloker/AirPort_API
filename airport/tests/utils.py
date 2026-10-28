@@ -1,7 +1,7 @@
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 
-from django.test import TestCase
+from django.utils.timezone import make_aware
 
 from airport.models import (
     Airport,
@@ -79,7 +79,23 @@ def create_airplane_section() -> AirplaneSection:
     )
 
 
-def creete_flight_without_crew(num: int): ...
+def create_flight(start_time=None) -> Flight:
+    route = create_routes(1)[0]
+    airplane = create_airplanes(1)[0]
+
+    if start_time:
+        departure_time = make_aware(start_time)
+    else:
+        departure_time = make_aware(datetime(2025, 3, 3, 15, 40))
+
+    arrival_time = departure_time + timedelta(days=1)
+
+    return Flight.objects.create(
+        route=route,
+        airplane=airplane,
+        departure_time=departure_time,
+        arrival_time=arrival_time,
+    )
 
 
 def create_flight_wiht_crew(num: int): ...
