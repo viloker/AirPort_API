@@ -1,5 +1,5 @@
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 from django.utils.timezone import make_aware
 
@@ -104,14 +104,3 @@ def create_flight_wiht_crew(num: int): ...
 def create_crew_positions(num: int) -> list[CrewPosition]:
     return [CrewPosition.objects.create(name=f"Test_position_{i}") for i in range(num)]
 
-
-def create_crews(num: int, position_list) -> list[Crew]:
-    return [
-        Crew.objects.create(
-            first_name=f"Test_name_{i}",
-            last_name=f"Test_{i}",
-            birth_data=datetime.today(),
-            position=random.choice(position_list),
-        )
-        for i in range(num)
-    ]
