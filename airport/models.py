@@ -28,7 +28,7 @@ class Route(models.Model):
 
     def save(self, *args, **kwargs):
         if self.source == self.destination:
-            raise ValidationError("SSource airport can’t be the same as destination airport")
+            raise ValidationError("Source airport can’t be the same as destination airport")
         super().save(*args, **kwargs)
 
 
