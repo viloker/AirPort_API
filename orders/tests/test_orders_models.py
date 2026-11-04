@@ -250,7 +250,7 @@ class TicketTest(TestCase):
         self.assertIn(ticket, self.passenger.tickets.all())
 
     def test_one_passenger_on_2_seats(self):
-        ticket_1 = Ticket.objects.create(
+        Ticket.objects.create(
             flight=self.flight,
             row=2,
             seat=1,
@@ -259,7 +259,7 @@ class TicketTest(TestCase):
             passenger=self.passenger,
         )
 
-        ticket_2 = Ticket.objects.create(
+        Ticket.objects.create(
             flight=self.flight,
             row=2,
             seat=2,

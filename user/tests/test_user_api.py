@@ -51,7 +51,7 @@ class PablicUserAPITests(APITestCase):
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
 
     def test_register_with_double_email(self):
-        response = self.client.post(REGISTER_URL, self.playload, format="json")
+        self.client.post(REGISTER_URL, self.playload, format="json")
         bad_response = self.client.post(REGISTER_URL, self.playload, format="json")
         users_count = get_user_model().objects.all().count()
 

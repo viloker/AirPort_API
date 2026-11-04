@@ -7,13 +7,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('airport', '0005_remove_crew_unique_first_last_name_birth_data_and_more'),
+        ("airport", "0005_remove_crew_unique_first_last_name_birth_data_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='flight',
-            name='price',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=7, null=True, validators=[django.core.validators.MinValueValidator(0)]),
+            model_name="flight",
+            name="price",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=7,
+                null=True,
+                validators=[django.core.validators.MinValueValidator(0)],
+            ),
         ),
     ]

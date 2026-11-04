@@ -6,16 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('airport', '0002_remove_airplanesection_seat_class_and_more'),
+        ("airport", "0002_remove_airplanesection_seat_class_and_more"),
     ]
 
     operations = [
         migrations.AddConstraint(
-            model_name='airplane',
-            constraint=models.CheckConstraint(condition=models.Q(('rows__gte', 1)), name='rows_gte'),
+            model_name="airplane",
+            constraint=models.CheckConstraint(
+                condition=models.Q(("rows__gte", 1)), name="rows_gte"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='airplane',
-            constraint=models.CheckConstraint(condition=models.Q(('seat_in_row__gte', 1)), name='seat_in_row__gte'),
+            model_name="airplane",
+            constraint=models.CheckConstraint(
+                condition=models.Q(("seat_in_row__gte", 1)), name="seat_in_row__gte"
+            ),
         ),
     ]

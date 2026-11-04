@@ -54,9 +54,9 @@ class AnonymousAirportAPITest(APITestCase):
         create_airports(3)
 
         airport = Airport.objects.create(name="Paris", code="PRS")
-        
+
         serializer = AirportSerializer(airport)
-        
+
         url = self.url + "?code=prs"
 
         response = self.client.get(url, format="json")

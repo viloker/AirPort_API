@@ -5,7 +5,11 @@ from rest_framework.test import APITestCase
 
 from airport.models import AirplaneSection
 from airport.serializers import AirplaneSectionSerializer
-from airport.tests.utils import create_seat_types, create_airplane_section, create_airplanes
+from airport.tests.utils import (
+    create_seat_types,
+    create_airplane_section,
+    create_airplanes,
+)
 from airport.tests.tests_airport_api.helper import (
     create_admin,
     create_user,
@@ -54,6 +58,7 @@ class AnonymousAirplaneSectionAPITest(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(1, len(response.data))
         self.assertIn(serializer.data, response.data)
+
 
 class UserAirplaneSectionAPITest(APITestCase):
 

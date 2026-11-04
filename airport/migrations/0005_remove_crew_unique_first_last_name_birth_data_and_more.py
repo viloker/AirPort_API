@@ -7,36 +7,51 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('airport', '0004_alter_airplane_rows'),
+        ("airport", "0004_alter_airplane_rows"),
     ]
 
     operations = [
         migrations.RemoveConstraint(
-            model_name='crew',
-            name='unique_first_last_name_birth_data',
+            model_name="crew",
+            name="unique_first_last_name_birth_data",
         ),
         migrations.RenameField(
-            model_name='crew',
-            old_name='birth_data',
-            new_name='birth_date',
+            model_name="crew",
+            old_name="birth_data",
+            new_name="birth_date",
         ),
         migrations.AlterField(
-            model_name='flight',
-            name='airplane',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='flights', to='airport.airplane'),
+            model_name="flight",
+            name="airplane",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="flights",
+                to="airport.airplane",
+            ),
         ),
         migrations.AlterField(
-            model_name='route',
-            name='destination',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='destinations', to='airport.airport'),
+            model_name="route",
+            name="destination",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="destinations",
+                to="airport.airport",
+            ),
         ),
         migrations.AlterField(
-            model_name='route',
-            name='source',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='departing_routes', to='airport.airport'),
+            model_name="route",
+            name="source",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="departing_routes",
+                to="airport.airport",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='crew',
-            constraint=models.UniqueConstraint(fields=('first_name', 'last_name', 'birth_date'), name='unique_first_last_name_birth_date'),
+            model_name="crew",
+            constraint=models.UniqueConstraint(
+                fields=("first_name", "last_name", "birth_date"),
+                name="unique_first_last_name_birth_date",
+            ),
         ),
     ]

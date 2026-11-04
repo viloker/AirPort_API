@@ -1,10 +1,9 @@
 from datetime import datetime, timedelta
 
 from django.utils.timezone import make_aware
-from django.contrib.auth import get_user_model
 
 from airport.tests.utils import create_routes, create_airplanes
-from orders.models import Flight, Order, Passenger, Ticket
+from orders.models import Flight, Passenger, Ticket
 
 
 def create_ticket(order, price):
@@ -19,7 +18,9 @@ def create_ticket(order, price):
         arrival_time=departure_time + timedelta(hours=2),
     )
 
-    passenger = Passenger.objects.create(first_name="test", last_name="test", user=order.user)
+    passenger = Passenger.objects.create(
+        first_name="test", last_name="test", user=order.user
+    )
     return Ticket.objects.create(
         flight=flight,
         row=2,

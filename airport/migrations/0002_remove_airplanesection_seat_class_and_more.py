@@ -9,114 +9,148 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('airport', '0001_initial'),
+        ("airport", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='airplanesection',
-            name='seat_class',
+            model_name="airplanesection",
+            name="seat_class",
         ),
         migrations.RemoveField(
-            model_name='airport',
-            name='last_code',
+            model_name="airport",
+            name="last_code",
         ),
         migrations.RemoveField(
-            model_name='flight',
-            name='flight_number',
+            model_name="flight",
+            name="flight_number",
         ),
         migrations.AddField(
-            model_name='airplanesection',
-            name='seat_type',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='sections', to='airport.seattype'),
+            model_name="airplanesection",
+            name="seat_type",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="sections",
+                to="airport.seattype",
+            ),
         ),
         migrations.AddField(
-            model_name='airport',
-            name='code',
+            model_name="airport",
+            name="code",
             field=models.CharField(blank=True, max_length=4, null=True, unique=True),
         ),
         migrations.AlterField(
-            model_name='airline',
-            name='name',
+            model_name="airline",
+            name="name",
             field=models.CharField(max_length=64, unique=True),
         ),
         migrations.AlterField(
-            model_name='airplane',
-            name='airline',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='airplanes', to='airport.airline'),
+            model_name="airplane",
+            name="airline",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="airplanes",
+                to="airport.airline",
+            ),
         ),
         migrations.AlterField(
-            model_name='airplane',
-            name='airplane_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='airplanes', to='airport.airplanetype'),
+            model_name="airplane",
+            name="airplane_type",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="airplanes",
+                to="airport.airplanetype",
+            ),
         ),
         migrations.AlterField(
-            model_name='airplane',
-            name='name',
+            model_name="airplane",
+            name="name",
             field=models.CharField(max_length=32, unique=True),
         ),
         migrations.AlterField(
-            model_name='airplane',
-            name='rows',
-            field=models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(1)]),
+            model_name="airplane",
+            name="rows",
+            field=models.PositiveSmallIntegerField(
+                validators=[django.core.validators.MinValueValidator(1)]
+            ),
         ),
         migrations.AlterField(
-            model_name='airplane',
-            name='seat_in_row',
-            field=models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(1)]),
+            model_name="airplane",
+            name="seat_in_row",
+            field=models.PositiveSmallIntegerField(
+                validators=[django.core.validators.MinValueValidator(1)]
+            ),
         ),
         migrations.AlterField(
-            model_name='airplanesection',
-            name='row_from',
-            field=models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(1)]),
+            model_name="airplanesection",
+            name="row_from",
+            field=models.PositiveSmallIntegerField(
+                validators=[django.core.validators.MinValueValidator(1)]
+            ),
         ),
         migrations.AlterField(
-            model_name='airplanesection',
-            name='row_to',
-            field=models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(1)]),
+            model_name="airplanesection",
+            name="row_to",
+            field=models.PositiveSmallIntegerField(
+                validators=[django.core.validators.MinValueValidator(1)]
+            ),
         ),
         migrations.AlterField(
-            model_name='airplanetype',
-            name='name',
+            model_name="airplanetype",
+            name="name",
             field=models.CharField(max_length=32, unique=True),
         ),
         migrations.AlterField(
-            model_name='airport',
-            name='closest_big_city',
+            model_name="airport",
+            name="closest_big_city",
             field=models.CharField(blank=True, max_length=64, null=True),
         ),
         migrations.AlterField(
-            model_name='airport',
-            name='name',
+            model_name="airport",
+            name="name",
             field=models.CharField(max_length=64, unique=True),
         ),
         migrations.AlterField(
-            model_name='crew',
-            name='email',
+            model_name="crew",
+            name="email",
             field=models.EmailField(blank=True, max_length=254, null=True, unique=True),
         ),
         migrations.AlterField(
-            model_name='crew',
-            name='number_phone',
-            field=phonenumber_field.modelfields.PhoneNumberField(blank=True, max_length=128, null=True, region=None, unique=True),
+            model_name="crew",
+            name="number_phone",
+            field=phonenumber_field.modelfields.PhoneNumberField(
+                blank=True, max_length=128, null=True, region=None, unique=True
+            ),
         ),
         migrations.AlterField(
-            model_name='crew',
-            name='position',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='crew_set', to='airport.crewposition'),
+            model_name="crew",
+            name="position",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="crew_set",
+                to="airport.crewposition",
+            ),
         ),
         migrations.AlterField(
-            model_name='crewposition',
-            name='name',
+            model_name="crewposition",
+            name="name",
             field=models.CharField(max_length=32, unique=True),
         ),
         migrations.AlterField(
-            model_name='seattype',
-            name='name',
+            model_name="seattype",
+            name="name",
             field=models.CharField(max_length=16, unique=True),
         ),
         migrations.AddConstraint(
-            model_name='crew',
-            constraint=models.UniqueConstraint(fields=('first_name', 'last_name', 'birth_data'), name='unique_first_last_name_birth_data'),
+            model_name="crew",
+            constraint=models.UniqueConstraint(
+                fields=("first_name", "last_name", "birth_data"),
+                name="unique_first_last_name_birth_data",
+            ),
         ),
     ]

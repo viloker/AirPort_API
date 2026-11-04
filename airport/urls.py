@@ -10,7 +10,9 @@ router.register("airplane-types", views.AirplaneTypeViewSet, basename="airplanet
 router.register("airlines", views.AirlineViewSet, basename="airline")
 router.register("airplanes", views.AirplaneViewSet, basename="airplane")
 router.register("seat-types", views.SeatTypeViewSet, basename="seattype")
-router.register("airplane-sections", views.AirplaneSectionViewSet, basename="airplanesection")
+router.register(
+    "airplane-sections", views.AirplaneSectionViewSet, basename="airplanesection"
+)
 router.register("flights", views.FlightViewSet, basename="flight")
 router.register("crew-positions", views.CrewPositionViewSet)
 router.register("crew", views.CrewViewSet)

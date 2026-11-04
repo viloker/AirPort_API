@@ -7,13 +7,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('airport', '0003_airplane_rows_gte_airplane_seat_in_row__gte'),
+        ("airport", "0003_airplane_rows_gte_airplane_seat_in_row__gte"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='airplane',
-            name='rows',
-            field=models.PositiveSmallIntegerField(default=1, validators=[django.core.validators.MinValueValidator(1)]),
+            model_name="airplane",
+            name="rows",
+            field=models.PositiveSmallIntegerField(
+                default=1, validators=[django.core.validators.MinValueValidator(1)]
+            ),
         ),
     ]

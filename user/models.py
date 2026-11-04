@@ -5,6 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from user.manager import UserManager
 
+
 class User(AbstractBaseUser):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=32, null=True, blank=True)

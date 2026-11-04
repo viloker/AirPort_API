@@ -47,7 +47,7 @@ class TicketCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = ["flight", "row", "seat", "passenger"]
-        
+
         validators = []
 
     def validate_passenger(self, passenger):

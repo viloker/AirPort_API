@@ -1,5 +1,5 @@
 import random
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 
 from django.utils.timezone import make_aware
 
@@ -12,9 +12,7 @@ from airport.models import (
     SeatType,
     AirplaneSection,
     Flight,
-    Crew,
     CrewPosition,
-    FlightStatus,
 )
 
 
@@ -103,4 +101,3 @@ def create_flight_wiht_crew(num: int): ...
 
 def create_crew_positions(num: int) -> list[CrewPosition]:
     return [CrewPosition.objects.create(name=f"Test_position_{i}") for i in range(num)]
-

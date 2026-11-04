@@ -12,7 +12,6 @@ from airport.tests.tests_airport_api.helper import (
     detail_url,
 )
 
-
 SEAT_TYPE_URL = reverse("airport:seattype-list")
 
 
@@ -38,9 +37,7 @@ class AnonymousSeatTypeAPITest(APITestCase):
 
     def test_filter_seat_type_by_name(self):
         create_seat_types(3)
-        seat_type = SeatType.objects.create(
-            name="test"
-        )
+        seat_type = SeatType.objects.create(name="test")
         serializer = SeatTypeSerializer(seat_type)
 
         url = SEAT_TYPE_URL + "?name=test"
@@ -95,7 +92,9 @@ class AdminSeatTypeAPITest(APITestCase):
         seat_type = create_seat_types(1)[0]
 
         response = self.client.patch(
-            detail_url("seattype", seat_type.id), data={"name": "Business"}, format="json"
+            detail_url("seattype", seat_type.id),
+            data={"name": "Business"},
+            format="json",
         )
 
         seat_type.refresh_from_db()

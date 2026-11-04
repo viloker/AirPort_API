@@ -22,7 +22,7 @@ class Command(BaseCommand):
             except OperationalError as e:
 
                 print("DB is unavailable, waiting 5 second...")
-                time.sleep(5)
+                time.sleep(seconds_wait)
                 print("Error: ", e)
 
         raise CommandError(f"DB is unavailable after {n} attempts.")

@@ -8,7 +8,6 @@ from airport.models import Route
 from airport.serializers import RouteSerializer
 from airport.tests.utils import create_airports, create_routes
 
-
 ROUTE_URL = reverse("airport:route-list")
 
 
@@ -53,9 +52,7 @@ class AnonymousRouteAPITest(APITestCase):
         source = route_1.source
 
         route_2 = Route.objects.create(
-            source=route_1.source,
-            destination=routes_list[2].destination,
-            distance=500
+            source=route_1.source, destination=routes_list[2].destination, distance=500
         )
 
         serializer = RouteSerializer([route_1, route_2], many=True)
@@ -75,12 +72,9 @@ class AnonymousRouteAPITest(APITestCase):
         destination = route_1.destination
 
         route_2 = Route.objects.create(
-            source=routes_list[2].source,
-            destination=destination,
-            distance=500
+            source=routes_list[2].source, destination=destination, distance=500
         )
 
-        
         serializer = RouteSerializer([route_1, route_2], many=True)
 
         url = ROUTE_URL + f"?destination={destination.id}"
@@ -97,14 +91,15 @@ class AnonymousRouteAPITest(APITestCase):
         route_2 = routes_list[1]
 
         route = Route.objects.create(
-            source=route_1.source,
-            destination=route_2.destination,
-            distance=500
+            source=route_1.source, destination=route_2.destination, distance=500
         )
 
         serializer = RouteSerializer(route)
 
-        url = ROUTE_URL + f"?source={route_1.source.id}&destination={route_2.destination.id}"
+        url = (
+            ROUTE_URL
+            + f"?source={route_1.source.id}&destination={route_2.destination.id}"
+        )
 
         response = self.client.get(url, format="json")
 
@@ -115,21 +110,19 @@ class AnonymousRouteAPITest(APITestCase):
 
         routes_list = create_routes(4)
         route = routes_list[0]
-        
+
         url = ROUTE_URL + f"?destination={route.destination.name}"
-        
+
         response = self.client.get(url, format="json")
 
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code)
-
 
 
 class UserRouteAPITest(APITestCase):
 
     def setUp(self):
         user = get_user_model().objects.create_user(
-            email="test@gmail.com",
-            password="password123"
+            email="test@gmail.com", password="password123"
         )
         self.client.force_authenticate(user=user)
 
@@ -171,8 +164,7 @@ class AdminRouteAPITest(APITestCase):
 
     def setUp(self):
         user = get_user_model().objects.create_superuser(
-            email="test@test.com",
-            password="password123"
+            email="test@test.com", password="password123"
         )
         self.client.force_authenticate(user=user)
 

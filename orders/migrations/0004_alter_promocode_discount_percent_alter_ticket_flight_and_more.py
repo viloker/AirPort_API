@@ -8,23 +8,34 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('airport', '0005_remove_crew_unique_first_last_name_birth_data_and_more'),
-        ('orders', '0003_alter_ticket_order'),
+        ("airport", "0005_remove_crew_unique_first_last_name_birth_data_and_more"),
+        ("orders", "0003_alter_ticket_order"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='promocode',
-            name='discount_percent',
-            field=models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(100)]),
+            model_name="promocode",
+            name="discount_percent",
+            field=models.PositiveSmallIntegerField(
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(100),
+                ]
+            ),
         ),
         migrations.AlterField(
-            model_name='ticket',
-            name='flight',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='tickets', to='airport.flight'),
+            model_name="ticket",
+            name="flight",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="tickets",
+                to="airport.flight",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='ticket',
-            constraint=models.UniqueConstraint(fields=('flight', 'row', 'seat'), name='unique_seat_in_flight'),
+            model_name="ticket",
+            constraint=models.UniqueConstraint(
+                fields=("flight", "row", "seat"), name="unique_seat_in_flight"
+            ),
         ),
     ]

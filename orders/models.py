@@ -29,8 +29,9 @@ class PromoCode(models.Model):
     def clean(self, *args, **kwargs):
         if self.valid_from > self.valid_to:
             raise ValidationError("valid_from cannot be later than valid_to")
-        
+
         super().clean(*args, **kwargs)
+
 
 class Passenger(models.Model):
     first_name = models.CharField(max_length=32)
@@ -52,7 +53,13 @@ class Ticket(models.Model):
 
     seat_class = models.CharField(max_length=16)
 
-    price = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True, validators=[MinValueValidator(0)])
+    price = models.DecimalField(
+        max_digits=7,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        validators=[MinValueValidator(0)],
+    )
 
     order = models.ForeignKey("Order", related_name="tickets", on_delete=models.CASCADE)
 
