@@ -28,7 +28,9 @@ class Route(models.Model):
 
     def save(self, *args, **kwargs):
         if self.source == self.destination:
-            raise ValidationError("Source airport can’t be the same as destination airport")
+            raise ValidationError(
+                "Source airport can’t be the same as destination airport"
+            )
         super().save(*args, **kwargs)
 
 
@@ -50,7 +52,9 @@ class Airline(models.Model):
 class Airplane(models.Model):
     name = models.CharField(max_length=32, unique=True)
 
-    rows = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)], default=1)
+    rows = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1)], default=1
+    )
     seat_in_row = models.PositiveSmallIntegerField(validators=[MinValueValidator(1)])
 
     airplane_type = models.ForeignKey(
@@ -105,7 +109,9 @@ class AirplaneSection(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.row_to <= self.airplane.rows:
-            raise ValueError("row_to can’t be greater than the number of rows in the airplane")
+            raise ValueError(
+                "row_to can’t be greater than the number of rows in the airplane"
+            )
         if not self.row_to > self.row_from:
             raise ValueError("row_to can't be less than row_from")
 
@@ -136,11 +142,12 @@ class Flight(models.Model):
     status = models.CharField(
         max_length=16, choices=FlightStatus.choices, default=FlightStatus.SCHEDULED
     )
+
+    price = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True, validators=[MinValueValidator(0)])
+
     crew = models.ManyToManyField("Crew", related_name="flights")
 
     def clean(self, *args, **kwargs): ...
-
-    # тут можливо потрібно буде додати логіку для розрахунку часу
 
     def __str__(self):
         return f"Flight from {self.route.source.name} to {self.route.destination.name}, status: {self.status}"
