@@ -63,6 +63,7 @@ The API is available at **http://localhost:8000/**. Migrations are applied autom
 | Variable | Description |
 |---|---|
 | `SECRET_KEY` | Django secret key |
+| `DEBUG` | `True` for local development, `False` in production |
 | `MYSQL_DATABASE` | MySQL database name |
 | `MYSQL_USER` | MySQL user |
 | `MYSQL_PASSWORD` | MySQL user password |
@@ -70,20 +71,46 @@ The API is available at **http://localhost:8000/**. Migrations are applied autom
 | `HOST` | Database host, `db` inside Docker |
 | `PORT` | Database port, `3306` |
 
-### Create an admin
+### Load demo data
+
+The database starts empty. To try the API right away, load the demo fixture
+(run it in a second terminal while `docker compose up` is running):
 
 ```bash
-docker compose run --rm backend python manage.py createsuperuser
+docker compose exec backend python manage.py loaddata fixtures/demo_data.json
 ```
 
-The database starts empty. Log in with the admin account and add airports, airplanes,
-seat sections, routes and flights through the API (Swagger UI) or the Django admin at `/admin/`.
-After that, regular users can register and buy tickets.
+It adds 6 airports, 8 routes, 3 airlines, 4 airplanes with seat sections
+(Business / Premium Economy / Economy), crew, 12 flights in March 2027
+(including a delayed, a cancelled and a "not on sale yet" flight without a price),
+promo codes and a demo order.
+
+| Account | Email | Password |
+|---|---|---|
+| Admin | `admin@airport.com` | `admin12345` |
+| User | `demo@airport.com` | `demo12345` |
+
+> Load the fixture into an **empty** database: it uses fixed ids and would overwrite existing rows.
+> To start from scratch: `docker compose down -v && docker compose up --build`
+> (`-v` deletes all database data).
+
+Promo codes in the fixture: `AUTUMN10` (active, 10 %) and `SUMMER25` (expired — use it to see the validation error).
+
+### Create your own admin
+
+If you don't use the demo data:
+
+```bash
+docker compose exec backend python manage.py createsuperuser
+```
+
+Then add airports, airplanes, seat sections, routes and flights through Swagger UI
+or the Django admin at `/admin/`.
 
 ### Run tests
 
 ```bash
-docker compose run --rm backend python manage.py test
+docker compose exec backend python manage.py test
 ```
 
 ---
@@ -107,7 +134,7 @@ docker compose run --rm backend python manage.py test
 4. **Refresh the token** when it expires — `POST /api/user/refresh-token/` with `{"refresh": "<refresh token>"}`.
 5. **Your profile** — `GET /api/user/me/`
 
-To manage the catalog (airports, flights, …) use an admin account created with `createsuperuser`.
+To manage the catalog (airports, flights, …) use an admin account: the demo admin or one created with `createsuperuser`.
 
 ---
 
@@ -176,6 +203,48 @@ If a seat is already taken, the error points to the exact ticket:
 ```json
 {"tickets": {"0": {"seat": ["Seat 12-3 is already taken"]}}}
 ```
+
+---
+
+## Screenshots
+
+Browsable API pages with the demo data loaded.
+
+**Airport API root — all catalog endpoints**
+
+![Airport API root — all catalog endpoints](api_examples/01-airport-api-root.png)
+
+**Flight list**
+
+![Flight list](api_examples/02-flight-list.png)
+
+**Airplane sections — seat classes by rows**
+
+![Airplane sections — seat classes by rows](api_examples/06-airplane-section-list.png)
+
+**Seat types**
+
+![Seat types](api_examples/05-seat-type-list.png)
+
+**Airplane types**
+
+![Airplane types](api_examples/03-airplane-type-list.png)
+
+**Airlines**
+
+![Airlines](api_examples/04-airline-list.png)
+
+**Crew positions**
+
+![Crew positions](api_examples/08-crew-position-list.png)
+
+**Crew list is admin-only — anonymous users get `401`**
+
+![Crew list is admin-only — anonymous users get `401`](api_examples/09-crew-list-unauthorized.png)
+
+**Orders API root**
+
+![Orders API root](api_examples/10-orders-api-root.png)
 
 ---
 
