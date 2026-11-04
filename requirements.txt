@@ -1,0 +1,13 @@
+asgiref==3.12.1
+Django==6.1.2
+django-phonenumber-field==8.5.0
+djangorestframework==3.18.3
+djangorestframework_simplejwt==5.5.1
+mysqlclient==2.3.0
+phonenumberslite==9.0.41
+PyJWT==2.15.1
+python-dotenv==1.2.4
+sqlparse==0.6.0
+drf-spectacular==0.30.0
+flake8==7.5.0
+black==26.10.1
