@@ -1,0 +1,698 @@
+[
+  {
+    "model": "user.user",
+    "pk": 1,
+    "fields": {
+      "email": "admin@airport.com",
+      "password": "pbkdf2_sha256$870000$bba4e3fbd5a9b4ba49bb21$xwUm9F74OfqJ6m5dfpc/cdHAFmrmbEs1YsznAgpS2Eo=",
+      "first_name": "Admin",
+      "last_name": "Airport",
+      "number_phone": null,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": null
+    }
+  },
+  {
+    "model": "user.user",
+    "pk": 2,
+    "fields": {
+      "email": "demo@airport.com",
+      "password": "pbkdf2_sha256$870000$22e3685bab884abf9f2aef$0YMK3BUWveUrzufgtqETkUyaNZRfConkvr3s2bJXmRY=",
+      "first_name": "Max",
+      "last_name": "Mustermann",
+      "number_phone": null,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": null
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 1,
+    "fields": {
+      "name": "Cologne Bonn Airport",
+      "code": "CGN",
+      "closest_big_city": "Cologne"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 2,
+    "fields": {
+      "name": "Berlin Brandenburg Airport",
+      "code": "BER",
+      "closest_big_city": "Berlin"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 3,
+    "fields": {
+      "name": "Munich Airport",
+      "code": "MUC",
+      "closest_big_city": "Munich"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 4,
+    "fields": {
+      "name": "Frankfurt Airport",
+      "code": "FRA",
+      "closest_big_city": "Frankfurt"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 5,
+    "fields": {
+      "name": "London Heathrow Airport",
+      "code": "LHR",
+      "closest_big_city": "London"
+    }
+  },
+  {
+    "model": "airport.airport",
+    "pk": 6,
+    "fields": {
+      "name": "Barcelona El Prat Airport",
+      "code": "BCN",
+      "closest_big_city": "Barcelona"
+    }
+  },
+  {
+    "model": "airport.route",
+    "pk": 1,
+    "fields": {
+      "source": 1,
+      "destination": 2,
+      "distance": 480
+    }
+  },
+  {
+    "model": "airport.route",
+    "pk": 2,
+    "fields": {
+      "source": 2,
+      "destination": 1,
+      "distance": 480
+    }
+  },
+  {
+    "model": "airport.route",
+    "pk": 3,
+    "fields": {
+      "source": 1,
+      "destination": 3,
+      "distance": 460
+    }
+  },
+  {
+    "model": "airport.route",
+    "pk": 4,
+    "fields": {
+      "source": 3,
+      "destination": 1,
+      "distance": 460
+    }
+  },
+  {
+    "model": "airport.route",
+    "pk": 5,
+    "fields": {
+      "source": 4,
+      "destination": 5,
+      "distance": 655
+    }
+  },
+  {
+    "model": "airport.route",
+    "pk": 6,
+    "fields": {
+      "source": 5,
+      "destination": 4,
+      "distance": 655
+    }
+  },
+  {
+    "model": "airport.route",
+    "pk": 7,
+    "fields": {
+      "source": 1,
+      "destination": 6,
+      "distance": 1150
+    }
+  },
+  {
+    "model": "airport.route",
+    "pk": 8,
+    "fields": {
+      "source": 2,
+      "destination": 6,
+      "distance": 1500
+    }
+  },
+  {
+    "model": "airport.airplanetype",
+    "pk": 1,
+    "fields": {
+      "name": "Narrow-body"
+    }
+  },
+  {
+    "model": "airport.airplanetype",
+    "pk": 2,
+    "fields": {
+      "name": "Wide-body"
+    }
+  },
+  {
+    "model": "airport.airline",
+    "pk": 1,
+    "fields": {
+      "name": "Lufthansa"
+    }
+  },
+  {
+    "model": "airport.airline",
+    "pk": 2,
+    "fields": {
+      "name": "Eurowings"
+    }
+  },
+  {
+    "model": "airport.airline",
+    "pk": 3,
+    "fields": {
+      "name": "Ryanair"
+    }
+  },
+  {
+    "model": "airport.seattype",
+    "pk": 1,
+    "fields": {
+      "name": "Business"
+    }
+  },
+  {
+    "model": "airport.seattype",
+    "pk": 2,
+    "fields": {
+      "name": "Premium Economy"
+    }
+  },
+  {
+    "model": "airport.seattype",
+    "pk": 3,
+    "fields": {
+      "name": "Economy"
+    }
+  },
+  {
+    "model": "airport.airplane",
+    "pk": 1,
+    "fields": {
+      "name": "Airbus A320 D-AIUA",
+      "rows": 30,
+      "seat_in_row": 6,
+      "airplane_type": 1,
+      "airline": 1
+    }
+  },
+  {
+    "model": "airport.airplanesection",
+    "pk": 1,
+    "fields": {
+      "airplane": 1,
+      "seat_type": 1,
+      "row_from": 1,
+      "row_to": 4
+    }
+  },
+  {
+    "model": "airport.airplanesection",
+    "pk": 2,
+    "fields": {
+      "airplane": 1,
+      "seat_type": 3,
+      "row_from": 5,
+      "row_to": 30
+    }
+  },
+  {
+    "model": "airport.airplane",
+    "pk": 2,
+    "fields": {
+      "name": "Airbus A319 D-AGWA",
+      "rows": 24,
+      "seat_in_row": 6,
+      "airplane_type": 1,
+      "airline": 2
+    }
+  },
+  {
+    "model": "airport.airplanesection",
+    "pk": 3,
+    "fields": {
+      "airplane": 2,
+      "seat_type": 3,
+      "row_from": 1,
+      "row_to": 24
+    }
+  },
+  {
+    "model": "airport.airplane",
+    "pk": 3,
+    "fields": {
+      "name": "Boeing 737 EI-DCL",
+      "rows": 32,
+      "seat_in_row": 6,
+      "airplane_type": 1,
+      "airline": 3
+    }
+  },
+  {
+    "model": "airport.airplanesection",
+    "pk": 4,
+    "fields": {
+      "airplane": 3,
+      "seat_type": 3,
+      "row_from": 1,
+      "row_to": 32
+    }
+  },
+  {
+    "model": "airport.airplane",
+    "pk": 4,
+    "fields": {
+      "name": "Airbus A350 D-AIXA",
+      "rows": 40,
+      "seat_in_row": 9,
+      "airplane_type": 2,
+      "airline": 1
+    }
+  },
+  {
+    "model": "airport.airplanesection",
+    "pk": 5,
+    "fields": {
+      "airplane": 4,
+      "seat_type": 1,
+      "row_from": 1,
+      "row_to": 8
+    }
+  },
+  {
+    "model": "airport.airplanesection",
+    "pk": 6,
+    "fields": {
+      "airplane": 4,
+      "seat_type": 2,
+      "row_from": 9,
+      "row_to": 14
+    }
+  },
+  {
+    "model": "airport.airplanesection",
+    "pk": 7,
+    "fields": {
+      "airplane": 4,
+      "seat_type": 3,
+      "row_from": 15,
+      "row_to": 40
+    }
+  },
+  {
+    "model": "airport.crewposition",
+    "pk": 1,
+    "fields": {
+      "name": "Captain"
+    }
+  },
+  {
+    "model": "airport.crewposition",
+    "pk": 2,
+    "fields": {
+      "name": "First Officer"
+    }
+  },
+  {
+    "model": "airport.crewposition",
+    "pk": 3,
+    "fields": {
+      "name": "Flight Attendant"
+    }
+  },
+  {
+    "model": "airport.crew",
+    "pk": 1,
+    "fields": {
+      "first_name": "Anna",
+      "last_name": "Schmidt",
+      "birth_date": "1985-03-14",
+      "position": 1,
+      "email": "anna.schmidt@airport.com",
+      "number_phone": null
+    }
+  },
+  {
+    "model": "airport.crew",
+    "pk": 2,
+    "fields": {
+      "first_name": "Lukas",
+      "last_name": "Weber",
+      "birth_date": "1990-07-02",
+      "position": 2,
+      "email": "lukas.weber@airport.com",
+      "number_phone": null
+    }
+  },
+  {
+    "model": "airport.crew",
+    "pk": 3,
+    "fields": {
+      "first_name": "Mia",
+      "last_name": "Fischer",
+      "birth_date": "1995-11-21",
+      "position": 3,
+      "email": "mia.fischer@airport.com",
+      "number_phone": null
+    }
+  },
+  {
+    "model": "airport.crew",
+    "pk": 4,
+    "fields": {
+      "first_name": "Jonas",
+      "last_name": "Becker",
+      "birth_date": "1993-01-09",
+      "position": 3,
+      "email": "jonas.becker@airport.com",
+      "number_phone": null
+    }
+  },
+  {
+    "model": "airport.crew",
+    "pk": 5,
+    "fields": {
+      "first_name": "Sophie",
+      "last_name": "Wagner",
+      "birth_date": "1988-05-30",
+      "position": 1,
+      "email": "sophie.wagner@airport.com",
+      "number_phone": null
+    }
+  },
+  {
+    "model": "airport.crew",
+    "pk": 6,
+    "fields": {
+      "first_name": "Felix",
+      "last_name": "Hoffmann",
+      "birth_date": "1992-09-17",
+      "position": 2,
+      "email": "felix.hoffmann@airport.com",
+      "number_phone": null
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 1,
+    "fields": {
+      "route": 1,
+      "airplane": 1,
+      "departure_time": "2027-03-01T06:00:00Z",
+      "arrival_time": "2027-03-01T07:10:00Z",
+      "status": "scheduled",
+      "price": "89.00",
+      "crew": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 2,
+    "fields": {
+      "route": 2,
+      "airplane": 1,
+      "departure_time": "2027-03-01T17:00:00Z",
+      "arrival_time": "2027-03-01T18:10:00Z",
+      "status": "scheduled",
+      "price": "95.00",
+      "crew": [
+        5,
+        6,
+        4
+      ]
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 3,
+    "fields": {
+      "route": 3,
+      "airplane": 2,
+      "departure_time": "2027-03-02T08:00:00Z",
+      "arrival_time": "2027-03-02T09:05:00Z",
+      "status": "delayed",
+      "price": "79.00",
+      "crew": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 4,
+    "fields": {
+      "route": 4,
+      "airplane": 2,
+      "departure_time": "2027-03-02T15:00:00Z",
+      "arrival_time": "2027-03-02T16:05:00Z",
+      "status": "scheduled",
+      "price": "79.00",
+      "crew": [
+        5,
+        6,
+        4
+      ]
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 5,
+    "fields": {
+      "route": 5,
+      "airplane": 4,
+      "departure_time": "2027-03-03T09:00:00Z",
+      "arrival_time": "2027-03-03T10:40:00Z",
+      "status": "scheduled",
+      "price": "159.00",
+      "crew": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 6,
+    "fields": {
+      "route": 6,
+      "airplane": 4,
+      "departure_time": "2027-03-04T11:00:00Z",
+      "arrival_time": "2027-03-04T12:35:00Z",
+      "status": "scheduled",
+      "price": "149.00",
+      "crew": [
+        5,
+        6,
+        4
+      ]
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 7,
+    "fields": {
+      "route": 7,
+      "airplane": 3,
+      "departure_time": "2027-03-05T05:00:00Z",
+      "arrival_time": "2027-03-05T07:15:00Z",
+      "status": "scheduled",
+      "price": "59.00",
+      "crew": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 8,
+    "fields": {
+      "route": 8,
+      "airplane": 3,
+      "departure_time": "2027-03-07T13:00:00Z",
+      "arrival_time": "2027-03-07T15:35:00Z",
+      "status": "scheduled",
+      "price": "69.00",
+      "crew": [
+        5,
+        6,
+        4
+      ]
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 9,
+    "fields": {
+      "route": 1,
+      "airplane": 1,
+      "departure_time": "2027-03-08T06:00:00Z",
+      "arrival_time": "2027-03-08T07:10:00Z",
+      "status": "scheduled",
+      "price": null,
+      "crew": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 10,
+    "fields": {
+      "route": 3,
+      "airplane": 2,
+      "departure_time": "2027-03-03T08:00:00Z",
+      "arrival_time": "2027-03-03T09:05:00Z",
+      "status": "cancelled",
+      "price": "79.00",
+      "crew": [
+        5,
+        6,
+        4
+      ]
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 11,
+    "fields": {
+      "route": 1,
+      "airplane": 1,
+      "departure_time": "2027-03-03T06:00:00Z",
+      "arrival_time": "2027-03-03T07:10:00Z",
+      "status": "scheduled",
+      "price": "99.00",
+      "crew": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "airport.flight",
+    "pk": 12,
+    "fields": {
+      "route": 2,
+      "airplane": 1,
+      "departure_time": "2027-03-03T17:00:00Z",
+      "arrival_time": "2027-03-03T18:10:00Z",
+      "status": "scheduled",
+      "price": "99.00",
+      "crew": [
+        5,
+        6,
+        4
+      ]
+    }
+  },
+  {
+    "model": "orders.promocode",
+    "pk": 1,
+    "fields": {
+      "code": "AUTUMN10",
+      "discount_percent": 10,
+      "valid_from": "2026-09-01",
+      "valid_to": "2027-12-31"
+    }
+  },
+  {
+    "model": "orders.promocode",
+    "pk": 2,
+    "fields": {
+      "code": "SUMMER25",
+      "discount_percent": 25,
+      "valid_from": "2026-06-01",
+      "valid_to": "2026-08-31"
+    }
+  },
+  {
+    "model": "orders.passenger",
+    "pk": 1,
+    "fields": {
+      "first_name": "Max",
+      "last_name": "Mustermann",
+      "user": 2
+    }
+  },
+  {
+    "model": "orders.passenger",
+    "pk": 2,
+    "fields": {
+      "first_name": "Erika",
+      "last_name": "Mustermann",
+      "user": 2
+    }
+  },
+  {
+    "model": "orders.order",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "created_at": "2026-11-04T10:00:00Z",
+      "promo_code": 1,
+      "status": "pending",
+      "total_paid": null
+    }
+  },
+  {
+    "model": "orders.ticket",
+    "pk": 1,
+    "fields": {
+      "flight": 1,
+      "row": 12,
+      "seat": 3,
+      "seat_class": "Economy",
+      "price": "89.00",
+      "order": 1,
+      "passenger": 1
+    }
+  },
+  {
+    "model": "orders.ticket",
+    "pk": 2,
+    "fields": {
+      "flight": 1,
+      "row": 12,
+      "seat": 4,
+      "seat_class": "Economy",
+      "price": "89.00",
+      "order": 1,
+      "passenger": 2
+    }
+  }
+]
