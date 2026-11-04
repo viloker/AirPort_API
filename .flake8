@@ -1,0 +1,11 @@
+[flake8]
+exclude =
+    venv,
+    .git,
+    .gitignore,
+    DockerFile,
+    docker-compose,
+    migrations,
+    __pycache__,
+
+max-line-length = 88
