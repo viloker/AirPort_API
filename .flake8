@@ -1,4 +1,6 @@
 [flake8]
+max-line-length = 88
+extend-ignore = E203
 exclude =
     venv,
     .git,
@@ -7,5 +9,3 @@ exclude =
     docker-compose,
     migrations,
     __pycache__,
-
-max-line-length = 88
